@@ -4,6 +4,7 @@
 // @version      0.1
 // @description  Send forum searches to Google Search
 // @author       Randy W. Sims
+// @updateURL    https://github.com/simsrw73/userscripts/raw/master/scripts/Faithlife%20Community%20Forum%20Search.user.js
 // @match        https://community.logos.com/*
 // @grant        none
 // @run-at       document-end
