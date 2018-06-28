@@ -21,7 +21,7 @@
     var siteLogosWiki   = 'site:wiki.logos.com';
 
     var basicSearch = siteLogosForums;
-    var superSearch = siteLogosForums + ' OR ' + siteLogosWiki;
+    var superSearch = '(' + siteLogosForums + ' OR ' + siteLogosWiki + ')';
 
     var searchGoogle = function(isSuperSearch) {
         var searchInput = document.getElementById(SearchInputID);
