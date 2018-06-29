@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Faithlife Community Forum Search2G
 // @namespace    http://tampermonkey.net/
-// @version      0.6
+// @version      0.7
 // @description  Send forum searches to Google Search
 // @author       Randy W. Sims
 // @license      MIT
@@ -18,11 +18,12 @@
 
     var searchEngine = 'https://www.google.com/search?q=';
 
-    var siteLogosForums = 'site:community.logos.com';
-    var siteLogosWiki   = 'site:wiki.logos.com';
+    var siteLogosForums  = 'site:community.logos.com';
+    var siteLogosWiki    = 'site:wiki.logos.com';
+    var siteLogosSupport = 'site:logos.com/support';
 
     var basicSearch = siteLogosForums;
-    var superSearch = '(' + siteLogosForums + ' OR ' + siteLogosWiki + ')';
+    var superSearch = '(' + siteLogosForums + ' OR ' + siteLogosWiki + ' OR ' + siteLogosSupport + ')';
 
     var searchGoogle = function(isSuperSearch) {
         var searchInput = document.getElementById(SearchInputID);
