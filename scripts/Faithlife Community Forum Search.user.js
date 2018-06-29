@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Faithlife Community Forum Search2G
 // @namespace    http://tampermonkey.net/
-// @version      0.3
+// @version      0.6
 // @description  Send forum searches to Google Search
 // @author       Randy W. Sims
 // @license      MIT
