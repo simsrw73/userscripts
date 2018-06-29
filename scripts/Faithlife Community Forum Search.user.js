@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Faithlife Community Forum Search2G
 // @namespace    http://tampermonkey.net/
-// @version      0.7.1
+// @version      0.7.2
 // @description  Send forum searches to Google Search
 // @author       Randy W. Sims
 // @license      MIT
@@ -29,13 +29,7 @@
         var searchInput = document.getElementById(SearchInputID);
         if (searchInput == null || searchInput.value == '') { return; } /* No search term entered */
 
-        var searchQuery;
-        if (isSuperSearch) {
-            searchQuery = searchEngine + encodeURI(superSearch + ' ' + searchInput.value);
-        } else {
-            searchQuery = searchEngine + encodeURI(basicSearch + ' ' + searchInput.value);
-        }
-
+        var searchQuery = searchEngine + encodeURI((isSuperSearch ? superSearch : basicSearch) + ' ' + searchInput.value);
         window.location.href = searchQuery;
     }
 
