@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Faithlife Community Forum Search2G
-// @namespace    http://tampermonkey.net/
-// @version      0.7.2
+// @namespace    https://github.com/simsrw73/userscripts
+// @version      0.7.3
 // @description  Send forum searches to Google Search
 // @author       Randy W. Sims
 // @license      MIT
@@ -33,9 +33,11 @@
         window.location.href = searchQuery;
     }
 
-
     var searchButton = document.getElementById(searchButtonID);
-    if (searchButton == null) { return; } /* No Searchbar here */
+    if (searchButton == null) { return; } /* No Searchbar here... nothing to do */
+
+    var searchInput = document.getElementById(SearchInputID);
+    if (searchInput != null ) { searchInput.placeholder = 'Search Google...'; }
 
     searchButton.addEventListener('click', function(e) {
         if (e.shiftKey) {
@@ -50,7 +52,7 @@
     });
 
     window.onkeydown = function(e) {
-        if (e.keyCode == 13) {
+        if (e.keyCode == 13) { /* Enter key */
             if (e.shiftKey) {
                 return; /* fall through to the default search */
             } else if (e.ctrlKey) {
@@ -58,7 +60,7 @@
             } else {
                 searchGoogle(false);
             }
-        } else if (e.keyCode == 83 && e.altKey) {
+        } else if (e.keyCode == 83 && e.altKey) { /* Alt-s shortcut to activate search input */
             var searchInput = document.getElementById(SearchInputID);
             if (searchInput != null) { searchInput.focus(); }
         }
