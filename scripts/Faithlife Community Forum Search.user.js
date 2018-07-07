@@ -6,6 +6,8 @@
 // @author       Randy W. Sims
 // @license      MIT
 // @match        https://community.logos.com/*
+// @downloadURL  https://github.com/simsrw73/userscripts/raw/master/scripts/Faithlife%20Community%20Forum%20Search.user.js
+// @updateURL    https://github.com/simsrw73/userscripts/raw/master/scripts/Faithlife%20Community%20Forum%20Search.user.js
 // @grant        none
 // @run-at       document-end
 // ==/UserScript==
