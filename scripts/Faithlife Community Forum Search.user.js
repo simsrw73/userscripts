@@ -1,11 +1,13 @@
 // ==UserScript==
 // @name         Faithlife Community Forum Search2G
 // @namespace    https://github.com/simsrw73/userscripts
-// @version      0.7.3
+// @version      0.7.4
 // @description  Send forum searches to Google Search
 // @author       Randy W. Sims
 // @license      MIT
 // @match        https://community.logos.com/*
+// @downloadURL  https://github.com/simsrw73/userscripts/raw/master/scripts/Faithlife%20Community%20Forum%20Search.user.js
+// @updateURL    https://github.com/simsrw73/userscripts/raw/master/scripts/Faithlife%20Community%20Forum%20Search.user.js
 // @grant        none
 // @run-at       document-end
 // ==/UserScript==
