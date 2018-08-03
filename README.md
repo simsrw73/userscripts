@@ -11,3 +11,5 @@ Redirects searches on the forums to Google.
 - Press Shift-Enter or Shift-Click the search button to search the forums using the default forum search.
 
 Additionally, Alt-S will activate the search box so you can enter your search.
+
+You can also find this script on [OpenUserJS](https://openuserjs.org/scripts/simsrw73/Faithlife_Community_Forum_Search2G).
