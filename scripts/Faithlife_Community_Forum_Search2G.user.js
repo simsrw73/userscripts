@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Faithlife Community Forum Search2G
 // @namespace    https://github.com/simsrw73/userscripts
-// @version      0.7.4
+// @version      0.7.6
 // @description  Send forum searches to Google Search
 // @author       Randy W. Sims
 // @license      MIT
@@ -14,6 +14,9 @@
 
 (function() {
     'use strict';
+
+    // TODO: More than one search button ID across website
+    //       Profile & Favorites page Search btn:  ctl00_bhcr_sr_SearchForm1_ctl00_TitleBarSearchButton
 
     var searchButtonID = 'ctl00_ctl00_bhcr_sr_sr_ctl00_ctl00_TitleBarSearchButton';
     var SearchInputID = 'ctl00_ctl00_bhcr_sr_sr_ctl00_ctl00_TitleBarSearchText';
