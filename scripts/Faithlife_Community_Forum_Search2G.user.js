@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Faithlife Community Forum Search2G
 // @namespace    https://github.com/simsrw73/userscripts
-// @version      0.7.7
+// @version      0.7.8
 // @description  Send forum searches to Google Search
 // @author       Randy W. Sims
 // @license      MIT
@@ -25,7 +25,7 @@
 
     var siteLogosForums  = 'site:community.logos.com';
     var siteLogosWiki    = 'site:wiki.logos.com';
-    var siteLogosSupport = 'site:logos.com/support';
+    var siteLogosSupport = 'site:support.logos.com';
 
     var basicSearch = siteLogosForums;
     var superSearch = '(' + siteLogosSupport + ' OR ' + siteLogosWiki + ' OR ' + siteLogosForums + ')';
