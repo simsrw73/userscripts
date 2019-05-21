@@ -23,8 +23,8 @@
       const bookURL =
         'https://app.logos.com/books/' + encodeURIComponent(resourceName);
 
-      var a = document.createElement('a');
-      var aText = document.createTextNode(resourceName.substring(4));
+      const a = document.createElement('a');
+      const aText = document.createTextNode(resourceName.substring(4)); // remove LLS:
       a.appendChild(aText);
       a.title = 'Resource Name';
       a.className = 'btn btn-minor';
