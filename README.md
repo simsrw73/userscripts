@@ -24,3 +24,4 @@ You can also find this script on [OpenUserJS](https://openuserjs.org/scripts/sim
 Enhancements for the beta of the new Logos store
 
 - Adds the resource ID to PDPs and links it to open in app.logos.com
+- Remove Live Chat window and add it to "Phone" menu as an alternative
