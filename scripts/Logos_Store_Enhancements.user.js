@@ -101,6 +101,8 @@
       p.style.fontSize = '18px';
       p.style.verticalAlign = 'middle';
       p.style.display = 'inline-block';
+      p.style.userSelect = 'none';
+
       p.appendChild(aText);
       social.appendChild(p);
 
