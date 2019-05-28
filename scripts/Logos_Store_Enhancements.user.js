@@ -222,7 +222,7 @@
     });
 
     // Add entries to TOC
-    const overview = document.querySelector('h1[class^="index--productName"]');
+    const overview = document.querySelector('[class^="index--productName"]');
     addHeadingToTOC(toc, overview, 0, 'Overview');
 
     const headings = document.querySelectorAll(
@@ -253,7 +253,6 @@
     });
     toc.appendChild(heading);
   }
-
 
   ///////////////   CSS
   const css = [
