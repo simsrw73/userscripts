@@ -21,7 +21,11 @@ You can also find this script on [OpenUserJS](https://openuserjs.org/scripts/sim
 
 [![Install with Tampermonkey](https://img.shields.io/badge/Install%20with-Tampermonkey-00485b.svg)](https://github.com/simsrw73/userscripts/raw/master/scripts/Logos_Store_Enhancements.user.js)
 
+![Demo](screenshots/LogosStoreEnh.png)
+
 Enhancements for the beta of the new Logos store
 
 - Adds the resource ID to PDPs and links it to open in app.logos.com
 - Remove Live Chat window and add it to "Phone" menu as an alternative
+- Add page navigation to smooth scroll to headings on PDPs
+- Add Share-To social icons
