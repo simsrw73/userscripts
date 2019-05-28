@@ -108,6 +108,66 @@
     sidebar.appendChild(to);
   }
 
+  // Add page navigation TOC to sidebar
+  function addPageNav(to) {
+    const nav = document.createElement('div');
+    nav.id = 'page-nav';
+    nav.style.position = 'relative';
+    nav.minWidth = '118px';
+
+    nav.addEventListener('mouseenter', function(e) {
+      const toc = document.querySelector('#lseNavTo--TOC');
+      toc.style.display = 'flex';
+
+      // try to popup above the button
+      toc.classList.remove('lseNavTo--TOC-Dropdown');
+
+      // if it's out of bounds, display below the button
+      const box = toc.getBoundingClientRect();
+      if (box.top < 0) {
+        toc.classList.add('lseNavTo--TOC-Dropdown');
+      }
+    });
+
+    nav.addEventListener('mouseleave', function(e) {
+      document.querySelector('#lseNavTo--TOC').style.display = 'flex';
+      document.querySelector('#lseNavTo--TOC').style.display = 'none';
+    });
+
+    const dropdown = document.createElement('div');
+    dropdown.id = 'lseDropdown';
+
+    const dropdownButton = document.createElement('button');
+    dropdownButton.id = 'lseDropdown-button';
+
+    dropdownButton.appendChild(document.createTextNode('Navigate to'));
+    dropdown.appendChild(dropdownButton);
+
+    nav.appendChild(dropdown);
+
+    const toc = document.createElement('div');
+    toc.id = 'lseNavTo--TOC';
+
+    toc.addEventListener('mouseleave', function(e) {
+      document.querySelector('#lseNavTo--TOC').style.display = 'none';
+    });
+
+    // Add entries to TOC
+    const overview = document.querySelector('[class^="index--productName"]');
+    addHeadingToTOC(toc, overview, 0, 'Overview');
+
+    const headings = document.querySelectorAll(
+      'div[class^="index--displayTemplate"] h3[class^="index--headerCopy"], div[class^="index--displayTemplate"] div.bd-product-display-content h2'
+    );
+    headings.forEach(function(h, i) {
+      addHeadingToTOC(toc, h, i + 1);
+    });
+
+    nav.appendChild(toc);
+    to.appendChild(nav);
+
+  } // function addPageNav
+
   // Add Social Share-to icons to sidebar
   function addSocialIcons(to) {
     const url = document.head.querySelector("[property='og:url'][content]").content;
@@ -177,66 +237,6 @@
 
   } // function addSocialIcons
 
-  // Add page navigation TOC to sidebar
-  function addPageNav(to) {
-    const nav = document.createElement('div');
-    nav.id = 'page-nav';
-    nav.style.position = 'relative';
-    nav.minWidth = '118px';
-
-    nav.addEventListener('mouseenter', function(e) {
-      const toc = document.querySelector('#lseNavTo--TOC');
-      toc.style.display = 'flex';
-
-      // try to display above the button
-      toc.classList.remove('lseNavTo--TOC-Dropdown');
-
-      // if that's out of bounds, display below the button
-      const box = toc.getBoundingClientRect();
-      if (box.top < 0) {
-        toc.classList.add('lseNavTo--TOC-Dropdown');
-      }
-    });
-
-    nav.addEventListener('mouseleave', function(e) {
-      document.querySelector('#lseNavTo--TOC').style.display = 'flex';
-      document.querySelector('#lseNavTo--TOC').style.display = 'none';
-    });
-
-    const dropdown = document.createElement('div');
-    dropdown.id = 'lseDropdown';
-
-    const dropdownButton = document.createElement('button');
-    dropdownButton.id = 'lseDropdown-button';
-
-    dropdownButton.appendChild(document.createTextNode('Navigate to'));
-    dropdown.appendChild(dropdownButton);
-
-    nav.appendChild(dropdown);
-
-    const toc = document.createElement('div');
-    toc.id = 'lseNavTo--TOC';
-
-    toc.addEventListener('mouseleave', function(e) {
-      document.querySelector('#lseNavTo--TOC').style.display = 'none';
-    });
-
-    // Add entries to TOC
-    const overview = document.querySelector('[class^="index--productName"]');
-    addHeadingToTOC(toc, overview, 0, 'Overview');
-
-    const headings = document.querySelectorAll(
-      'div[class^="index--displayTemplate"] h3[class^="index--headerCopy"], div[class^="index--displayTemplate"] div.bd-product-display-content h2'
-    );
-    headings.forEach(function(h, i) {
-      addHeadingToTOC(toc, h, i + 1);
-    });
-
-    nav.appendChild(toc);
-    to.appendChild(nav);
-
-  } // function addPageNav
-
 
   // Utility to add headings to the page navigation TOC
   function addHeadingToTOC(toc, h, uid, altTitle) {
@@ -253,6 +253,7 @@
     });
     toc.appendChild(heading);
   }
+
 
   ///////////////   CSS
   const css = [
