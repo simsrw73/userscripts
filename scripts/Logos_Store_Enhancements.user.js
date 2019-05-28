@@ -111,7 +111,7 @@
   // Add page navigation TOC to sidebar
   function addPageNav(to) {
     const nav = document.createElement('div');
-    nav.id = 'page-nav';
+    nav.id = 'lseNavTo';
     nav.style.position = 'relative';
     nav.minWidth = '118px';
 
@@ -130,7 +130,6 @@
     });
 
     nav.addEventListener('mouseleave', function(e) {
-      document.querySelector('#lseNavTo--TOC').style.display = 'flex';
       document.querySelector('#lseNavTo--TOC').style.display = 'none';
     });
 
