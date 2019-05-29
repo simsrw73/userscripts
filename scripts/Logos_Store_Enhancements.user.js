@@ -1,12 +1,14 @@
 // ==UserScript==
 // @name         Logos Store Enhancements
 // @namespace    https://github.com/simsrw73/userscripts
-// @version      0.4.2
+// @version      0.4.3
 // @description  Get extended information about resources
 // @author       Randy W. Sims
 // @updateURL    https://github.com/simsrw73/userscripts/raw/master/scripts/Logos_Store_Enhancements.meta.js
 // @downloadURL  https://github.com/simsrw73/userscripts/raw/master/scripts/Logos_Store_Enhancements.user.js
 // @match        https://beta.logos.com/*
+// @grant        GM_xmlhttpRequest
+// @connect      app.logos.com
 // @run-at       document-end
 // ==/UserScript==
 
@@ -16,12 +18,11 @@
   var observatory = function(mutations, observer) {
     mutations.forEach(function(mutation) {
       if (mutation.type === 'childList') {
-
         // Hide chat button
         if (mutation.target.matches('#lhnChatButton')) {
           mutation.target.style.display = 'none';
 
-        // If there was a chat button, add chat to the Phone menu
+          // If there was a chat button, add chat to the Phone menu
         } else if (
           mutation.target.matches('div[class^="phone-number--container"]') &&
           document.querySelectorAll('#lhnContainerDone').length
@@ -42,7 +43,7 @@
             chatPopup.appendChild(a);
           }
 
-        // Display ResourceID & link it to app.logos.com
+          // Display ResourceID & link it to app.logos.com
         } else if (mutation.target.matches('div[class^="index--imageContainer"]')) {
           const seeInside = document.querySelector('.core-see-inside__iframe');
 
@@ -55,17 +56,49 @@
             const a = document.createElement('a');
             const aText = document.createTextNode(resourceName.substring(4)); // remove 'LLS:'
             a.appendChild(aText);
-            a.title = 'Resource Name';
             a.className = 'btn btn-minor';
+            a.title = 'Resource Info';
             a.href = bookURL;
             a.style.marginBottom = '8px';
+
+            GM_xmlhttpRequest({
+              method: 'GET',
+              url: 'https://app.logos.com/api/sinaix/resources/' + encodeURIComponent(resourceName) + '/fileInfo',
+              overrideMimeType: 'application/json',
+              onload: function(response) {
+                if (response.status == 200) {
+                  const json = JSON.parse(response.responseText);
+                  const versionString = document.createElement('div');
+                  versionString.style.marginTop = '4px';
+                  versionString.style.fontSize = '12px';
+                  const txt = document.createTextNode(json.version);
+                  versionString.appendChild(txt);
+                  a.appendChild(versionString);
+                } else {
+                  console.log('ERROR: Version String not available', response);
+                }
+              },
+            });
+
+            GM_xmlhttpRequest({
+              method: 'GET',
+              url: 'https://app.logos.com/api/app/resourceViewInfo?resourceId=' + encodeURIComponent(resourceName),
+              overrideMimeType: 'application/json',
+              onload: function(response) {
+                const json = JSON.parse(response.responseText);
+                let resMilestoneIndexes = json.milestoneIndexes.reduce(function(miString, mi) {
+                  return miString === '' ? mi.dataType : miString + ', ' + mi.dataType;
+                }, '');
+                a.title = resMilestoneIndexes ? 'Indexes: ' + resMilestoneIndexes : 'Resource Info';
+              },
+            });
 
             const seeInsideBtn = document.querySelector('.btn-see-inside');
             seeInsideBtn.parentNode.style.flexDirection = 'column';
             seeInsideBtn.parentNode.insertBefore(a, seeInsideBtn);
           }
 
-        // Add loaded in sections to the page navigation TOC
+          // Add loaded in sections to the page navigation TOC
         } else if (mutation.target.matches('div[class^="index--displayTemplate"]')) {
           const toc = document.querySelector('#lseNavTo--TOC');
 
@@ -164,17 +197,13 @@
 
     nav.appendChild(toc);
     to.appendChild(nav);
-
   } // function addPageNav
 
   // Add Social Share-to icons to sidebar
   function addSocialIcons(to) {
     const url = document.head.querySelector("[property='og:url'][content]").content;
     const title = document.head.querySelector("[property='og:title'][content]").content;
-    let flURL = 'https://faithlife.com/share?content=' +
-      encodeURIComponent(title) +
-      '&url=' +
-      encodeURIComponent(url);
+    let flURL = 'https://faithlife.com/share?content=' + encodeURIComponent(title) + '&url=' + encodeURIComponent(url);
     let fbURL =
       'https://www.facebook.com/sharer/sharer.php?kid_directed_site=0&sdk=joey&u=' +
       encodeURIComponent(url) +
@@ -256,9 +285,7 @@
 
     // Add social bar to the sidebar
     to.appendChild(social);
-
   } // function addSocialIcons
-
 
   // Utility to add headings to the page navigation TOC
   function addHeadingToTOC(toc, h, uid, altTitle) {
@@ -275,7 +302,6 @@
     });
     toc.appendChild(heading);
   }
-
 
   ///////////////   CSS
   const css = [
