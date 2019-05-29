@@ -25,7 +25,7 @@ You can also find this script on [OpenUserJS](https://openuserjs.org/scripts/sim
 
 Enhancements for the beta of the new Logos store
 
-- Adds the resource ID to PDPs and links it to open in app.logos.com
+- Adds the resource ID and Version info (when avail) to PDPs and links it to open in app.logos.com. Hover tip shows milestone indexes.
 - Remove Live Chat window and add it to "Phone" menu as an alternative
 - Add page navigation to smooth scroll to headings on PDPs
 - Add Share-To social icons
