@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Logos Store Enhancements
 // @namespace    https://github.com/simsrw73/userscripts
-// @version      0.4.3
+// @version      0.4.4
 // @description  Get extended information about resources
 // @author       Randy W. Sims
 // @updateURL    https://github.com/simsrw73/userscripts/raw/master/scripts/Logos_Store_Enhancements.meta.js
@@ -54,13 +54,15 @@
             const bookURL = 'https://app.logos.com/books/' + encodeURIComponent(resourceName);
 
             const a = document.createElement('a');
-            const aText = document.createTextNode(resourceName.substring(4)); // remove 'LLS:'
-            a.appendChild(aText);
+            a.id = 'lseResInfo';
             a.className = 'btn btn-minor';
             a.title = 'Resource Info';
+            const aText = document.createTextNode(resourceName.substring(4)); // remove 'LLS:'
+            a.appendChild(aText);
             a.href = bookURL;
             a.style.marginBottom = '8px';
 
+            // Get version from fileInfo api
             GM_xmlhttpRequest({
               method: 'GET',
               url: 'https://app.logos.com/api/sinaix/resources/' + encodeURIComponent(resourceName) + '/fileInfo',
@@ -68,28 +70,34 @@
               onload: function(response) {
                 if (response.status == 200) {
                   const json = JSON.parse(response.responseText);
-                  const versionString = document.createElement('div');
-                  versionString.style.marginTop = '4px';
-                  versionString.style.fontSize = '12px';
+                  const versElem = document.createElement('div');
+                  versElem.id = 'lseResInfo--Version';
+                  versElem.style.marginTop = '4px';
+                  versElem.style.fontSize = '12px';
                   const txt = document.createTextNode(json.version);
-                  versionString.appendChild(txt);
-                  a.appendChild(versionString);
-                } else {
-                  console.log('ERROR: Version String not available', response);
+                  versElem.appendChild(txt);
+                  a.appendChild(versElem);
                 }
               },
             });
 
+            // Get list of milestone indexes
             GM_xmlhttpRequest({
               method: 'GET',
               url: 'https://app.logos.com/api/app/resourceViewInfo?resourceId=' + encodeURIComponent(resourceName),
               overrideMimeType: 'application/json',
               onload: function(response) {
-                const json = JSON.parse(response.responseText);
-                let resMilestoneIndexes = json.milestoneIndexes.reduce(function(miString, mi) {
-                  return miString === '' ? mi.dataType : miString + ', ' + mi.dataType;
-                }, '');
-                a.title = resMilestoneIndexes ? 'Indexes: ' + resMilestoneIndexes : 'Resource Info';
+                if (response.status == 200) {
+                  const json = JSON.parse(response.responseText);
+                  let resMilestoneIndexes = json.milestoneIndexes
+                    .filter(function(mi) {
+                      return typeof mi.dataType !== 'undefined';
+                    })
+                    .reduce(function(miString, mi) {
+                      return miString === '' ? mi.dataType : miString + ', ' + mi.dataType;
+                    }, '');
+                  a.title = resMilestoneIndexes ? 'Indexes: ' + resMilestoneIndexes : 'Resource Info';
+                }
               },
             });
 
