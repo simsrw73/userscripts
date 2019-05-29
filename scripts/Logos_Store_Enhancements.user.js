@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Logos Store Enhancements
 // @namespace    https://github.com/simsrw73/userscripts
-// @version      0.4.4
+// @version      0.4.5
 // @description  Get extended information about resources
 // @author       Randy W. Sims
 // @updateURL    https://github.com/simsrw73/userscripts/raw/master/scripts/Logos_Store_Enhancements.meta.js
@@ -89,13 +89,19 @@
               onload: function(response) {
                 if (response.status == 200) {
                   const json = JSON.parse(response.responseText);
-                  let resMilestoneIndexes = json.milestoneIndexes
-                    .filter(function(mi) {
-                      return typeof mi.dataType !== 'undefined';
-                    })
-                    .reduce(function(miString, mi) {
-                      return miString === '' ? mi.dataType : miString + ', ' + mi.dataType;
-                    }, '');
+                  console.log(json);
+                  let resMilestoneIndexes = json.milestoneIndexes.reduce(function(miString, mi) {
+                    let idx = '';
+                    if (typeof mi.dataType !== 'undefined') {
+                      idx = mi.dataType;
+                    } else if (typeof mi.language !== 'undefined') {
+                      idx = mi.language;
+                    } else {
+                      console.log(mi);
+                    }
+
+                    return miString === '' ? idx : miString + ', ' + idx;
+                  }, '');
                   a.title = resMilestoneIndexes ? 'Indexes: ' + resMilestoneIndexes : 'Resource Info';
                 }
               },
