@@ -1,14 +1,14 @@
 // ==UserScript==
 // @name         Logos Store Enhancements
 // @namespace    https://github.com/simsrw73/userscripts
-// @version      0.4.6
+// @version      0.4.7
 // @description  Get extended information about resources
 // @author       Randy W. Sims
 // @updateURL    https://github.com/simsrw73/userscripts/raw/master/scripts/Logos_Store_Enhancements.meta.js
 // @downloadURL  https://github.com/simsrw73/userscripts/raw/master/scripts/Logos_Store_Enhancements.user.js
 // @match        https://beta.logos.com/*
 // @grant        GM_xmlhttpRequest
-// @connect      app.logos.com
+// @connect      libapi.logos.com
 // @run-at       document-end
 // ==/UserScript==
 
@@ -62,44 +62,44 @@
             a.href = bookURL;
             a.style.marginBottom = '8px';
 
-            // Get version from fileInfo api
+            // Discovered APIs:
+            //   https://libapi.logos.com/v1/resource/LLS%3AESVSB/resourceInfo.json?resourceFields=version
+            //   https://productsapi.logos.com/v3/products/filter?sourceToken=libronix&productTokens=LLS%3AESVSB&statusIds=3&storefront=logos-desktop&limit=1
+            //   https://app.logos.com/api/app/resourceViewInfo?resourceId=LLS%3AESVSB
+            //   https://app.logos.com/api/sinaix/resources/LLS%3AESVSB/fileInfo   (requires ownership)
             GM_xmlhttpRequest({
               method: 'GET',
-              url: 'https://app.logos.com/api/sinaix/resources/' + encodeURIComponent(resourceName) + '/fileInfo',
+              url: 'https://libapi.logos.com/v1/resource/' + encodeURIComponent(resourceName) + '/resourceInfo.json',
               overrideMimeType: 'application/json',
               onload: function(response) {
                 if (response.status == 200) {
-                  const json = JSON.parse(response.responseText);
+                  const resourceInfo = JSON.parse(response.responseText);
+
+                  // get resource version info
                   const versElem = document.createElement('div');
                   versElem.id = 'lseResInfo--Version';
                   versElem.style.marginTop = '4px';
                   versElem.style.fontSize = '12px';
-                  const txt = document.createTextNode(json.version);
+                  const txt = document.createTextNode(resourceInfo.version);
                   versElem.appendChild(txt);
                   a.appendChild(versElem);
-                }
-              },
-            });
 
-            // Get list of milestone indexes
-            GM_xmlhttpRequest({
-              method: 'GET',
-              url: 'https://app.logos.com/api/app/resourceViewInfo?resourceId=' + encodeURIComponent(resourceName),
-              overrideMimeType: 'application/json',
-              onload: function(response) {
-                if (response.status == 200) {
-                  const json = JSON.parse(response.responseText);
-                  let resMilestoneIndexes = json.milestoneIndexes.reduce(function(miString, mi) {
+                  // get milestone indexes
+                  let resMilestoneIndexes = resourceInfo.milestoneIndexes.reduce(function(miString, mi) {
                     let idx = '';
-                    if (typeof mi.dataType !== 'undefined') {
-                      idx = mi.dataType;
-                    } else if (typeof mi.language !== 'undefined') {
-                      idx = mi.language;
-                    } else {
-                      console.log(mi);
+                    switch (mi.kind) {
+                      case 'reference':
+                        idx = mi.dataTypeName;
+                        break;
+                      case 'headword':
+                        idx = mi.headwordLanguage;
+                        break;
+                      default:
+                        console.log(mi);
                     }
-
                     return miString === '' ? idx : miString + ', ' + idx;
+
+                    // get traits ???
                   }, '');
                   a.title = resMilestoneIndexes ? 'Indexes: ' + resMilestoneIndexes : 'Resource Info';
                 }
