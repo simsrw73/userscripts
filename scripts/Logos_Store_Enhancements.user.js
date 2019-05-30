@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Logos Store Enhancements
 // @namespace    https://github.com/simsrw73/userscripts
-// @version      0.4.5
+// @version      0.4.6
 // @description  Get extended information about resources
 // @author       Randy W. Sims
 // @updateURL    https://github.com/simsrw73/userscripts/raw/master/scripts/Logos_Store_Enhancements.meta.js
@@ -89,7 +89,6 @@
               onload: function(response) {
                 if (response.status == 200) {
                   const json = JSON.parse(response.responseText);
-                  console.log(json);
                   let resMilestoneIndexes = json.milestoneIndexes.reduce(function(miString, mi) {
                     let idx = '';
                     if (typeof mi.dataType !== 'undefined') {
@@ -119,6 +118,7 @@
           if (document.querySelector('#lseNavTo--TOC-divider') === null) {
             const hr = document.createElement('div');
             hr.id = 'lseNavTo--TOC-divider';
+            hr.style.display = 'none';
             hr.style.height = '0';
             hr.style.margin = '4px 8px';
             hr.style.borderTop = '1px solid #bbb';
@@ -127,11 +127,13 @@
 
           const containingProducts = document.querySelector('section[class^="index--containingProducts"]');
           if (containingProducts !== null && document.querySelector('.lseNavTo--Heading--100') === null) {
+            document.querySelector('#lseNavTo--TOC-divider').style.display = 'block';
             addHeadingToTOC(toc, containingProducts, 100, 'This title is included in...');
           }
 
           const customersAlsoBought = document.querySelector('section[class^="index--customersAlsoBoughtSection"]');
           if (customersAlsoBought !== null && document.querySelector('.lseNavTo--Heading--101') === null) {
+            document.querySelector('#lseNavTo--TOC-divider').style.display = 'block';
             addHeadingToTOC(toc, customersAlsoBought, 101, 'Customers also bought...');
           }
         }
@@ -203,7 +205,9 @@
     addHeadingToTOC(toc, overview, 0, 'Overview');
 
     const headings = document.querySelectorAll(
-      'div[class^="index--displayTemplate"] h3[class^="index--headerCopy"], div[class^="index--displayTemplate"] div.bd-product-display-content h2'
+      'div[class^="index--displayTemplate"] h3[class^="index--headerCopy"], ' +
+        'div[class^="index--displayTemplate"] div.bd-product-display-content h2,' +
+        'div[class^="index--defaultTemplateOverviewContainer"] div.bd-product-display-content h2'
     );
     headings.forEach(function(h, i) {
       addHeadingToTOC(toc, h, i + 1);
@@ -355,6 +359,7 @@
     '  flex-direction: column;',
     '  background-color: #fff;',
     '  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.12), 0 0 4px 0 rgba(0, 0, 0, 0.12);',
+    '  z-index: 999;',
     '}',
     '.lseNavTo--TOC-Dropdown {',
     '  top: 100% !important;',
