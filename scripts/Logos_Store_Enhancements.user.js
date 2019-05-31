@@ -64,6 +64,7 @@
             a.appendChild(aText);
             a.href = bookURL;
             a.style.marginBottom = '8px';
+            a.style.borderRadius = '3px';
 
             // Discovered APIs:
             //   https://libapi.logos.com/v1/resource/LLS%3AESVSB/resourceInfo.json?resourceFields=version
