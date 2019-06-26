@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Logos Store Enhancements
 // @namespace    https://github.com/simsrw73/userscripts
-// @version      0.4.9
+// @version      0.4.10
 // @description  Get extended information about resources
 // @author       Randy W. Sims
 // @updateURL    https://github.com/simsrw73/userscripts/raw/master/scripts/Logos_Store_Enhancements.meta.js
@@ -15,36 +15,18 @@
 // @run-at       document-end
 // ==/UserScript==
 
+
 (function() {
   'use strict';
 
   var observatory = function(mutations, observer) {
     mutations.forEach(function(mutation) {
       if (mutation.type === 'childList') {
+
         // Hide chat button
         if (mutation.target.matches('#lhnChatButton')) {
           mutation.target.style.display = 'none';
-
-          // If there was a chat button, add chat to the Phone menu
-        } else if (
-          mutation.target.matches('div[class^="phone-number--container"]') &&
-          document.querySelectorAll('#lhnContainerDone').length
-        ) {
-          const a = document.createElement('a');
-          a.appendChild(document.createTextNode('Open Live Chat'));
-          a.id = 'aLHNBTN';
-          a.className = 'ui1';
-          a.href = '#';
-          a.style.marginTop = '16px';
-          a.style.paddingTop = '8px';
-          a.style.borderTop = '2px solid var(--brand-blue)';
-          a.style.color = 'var(--brand-blue)';
-          a.setAttribute('onclick', 'OpenLHNChat();return false;');
-
-          const chatPopup = document.querySelector('div[class^="phone-number--popup"]');
-          if (chatPopup !== null) {
-            chatPopup.appendChild(a);
-          }
+        }
 
           // Display ResourceID & link it to app.logos.com
         } else if (mutation.target.matches('div[class^="index--imageContainer"]')) {
