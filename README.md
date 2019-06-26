@@ -17,11 +17,11 @@ You can also find this script on [OpenUserJS](https://openuserjs.org/scripts/sim
 ### See Also
  - [A low contrast, modern theme for the Faithlife Community Forums](https://github.com/simsrw73/white-off)
 
-## Logos Store Enhancements (For Beta site only)
+## Logos Store Enhancements
 
 [![Install with Tampermonkey](https://img.shields.io/badge/Install%20with-Tampermonkey-00485b.svg)](https://github.com/simsrw73/userscripts/raw/master/scripts/Logos_Store_Enhancements.user.js)
 
-Enhancements for the beta of the new Logos store
+Enhancements for Faithlife stores: logos.com, verbum.com, ebooks.faithlife.com, ebooks.noet.com
 
 - Adds the resource ID and Version info (when avail) to PDPs and links it to open in app.logos.com. Hover tip shows milestone indexes.
 - Remove Live Chat window and add it to "Phone" menu as an alternative
