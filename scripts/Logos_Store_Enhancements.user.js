@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Logos Store Enhancements
 // @namespace    https://github.com/simsrw73/userscripts
-// @version      0.4.8
+// @version      0.4.9
 // @description  Get extended information about resources
 // @author       Randy W. Sims
 // @updateURL    https://github.com/simsrw73/userscripts/raw/master/scripts/Logos_Store_Enhancements.meta.js
@@ -263,6 +263,7 @@
     let a = document.createElement('a');
     a.appendChild(svg);
     a.href = flURL;
+    a.target = '_blank';
     a.style.color = '#333'; // '#3b5998';
 
     social.appendChild(a);
@@ -282,6 +283,7 @@
     a = document.createElement('a');
     a.appendChild(svg);
     a.href = fbURL;
+    a.target = '_blank';
     a.style.color = '#333'; // '#3b5998';
 
     social.appendChild(a);
@@ -301,6 +303,7 @@
     a = document.createElement('a');
     a.appendChild(svg);
     a.href = twitURL;
+    a.target = '_blank';
     a.style.color = '#333'; // '#38A1F3';
 
     social.appendChild(a);
