@@ -1,11 +1,11 @@
 // ==UserScript==
-// @name         Logos Store Enhancements
+// @name         Faithlife Stores Enhanced
 // @namespace    https://github.com/simsrw73/userscripts
-// @version      0.4.10
+// @version      0.5.0
 // @description  Get extended information about resources
 // @author       Randy W. Sims
-// @updateURL    https://github.com/simsrw73/userscripts/raw/master/scripts/Logos_Store_Enhancements.meta.js
-// @downloadURL  https://github.com/simsrw73/userscripts/raw/master/scripts/Logos_Store_Enhancements.user.js
+// @updateURL    https://github.com/simsrw73/userscripts/raw/master/scripts/Faithlife_Stores_Enhanced.meta.js
+// @downloadURL  https://github.com/simsrw73/userscripts/raw/master/scripts/Faithlife_Stores_Enhanced.user.js
 // @match        https://*.logos.com/*
 // @match        https://verbum.com/*
 // @match        https://ebooks.faithlife.com/*
@@ -39,7 +39,7 @@
             const bookURL = 'https://app.logos.com/books/' + encodeURIComponent(resourceName);
 
             const a = document.createElement('a');
-            a.id = 'lseResInfo';
+            a.id = 'fseResInfo';
             a.className = 'btn btn-minor';
             a.title = 'Resource Info';
             const aText = document.createTextNode(resourceName.substring(4)); // remove 'LLS:'
@@ -63,7 +63,7 @@
 
                   // get resource version info
                   const versElem = document.createElement('div');
-                  versElem.id = 'lseResInfo--Version';
+                  versElem.id = 'fseResInfo--Version';
                   versElem.style.marginTop = '4px';
                   versElem.style.fontSize = '12px';
                   const txt = document.createTextNode(resourceInfo.version);
@@ -99,11 +99,11 @@
 
           // Add loaded in sections to the page navigation TOC
         } else if (mutation.target.matches('div[class^="index--displayTemplate"]')) {
-          const toc = document.querySelector('#lseNavTo--TOC');
+          const toc = document.querySelector('#fseNavTo--TOC');
 
-          if (document.querySelector('#lseNavTo--TOC-divider') === null) {
+          if (document.querySelector('#fseNavTo--TOC-divider') === null) {
             const hr = document.createElement('div');
-            hr.id = 'lseNavTo--TOC-divider';
+            hr.id = 'fseNavTo--TOC-divider';
             hr.style.display = 'none';
             hr.style.height = '0';
             hr.style.margin = '4px 8px';
@@ -112,14 +112,14 @@
           }
 
           const containingProducts = document.querySelector('section[class^="index--containingProducts"]');
-          if (containingProducts !== null && document.querySelector('.lseNavTo--Heading--100') === null) {
-            document.querySelector('#lseNavTo--TOC-divider').style.display = 'block';
+          if (containingProducts !== null && document.querySelector('.fseNavTo--Heading--100') === null) {
+            document.querySelector('#fseNavTo--TOC-divider').style.display = 'block';
             addHeadingToTOC(toc, containingProducts, 100, 'This title is included in...');
           }
 
           const customersAlsoBought = document.querySelector('section[class^="index--customersAlsoBoughtSection"]');
-          if (customersAlsoBought !== null && document.querySelector('.lseNavTo--Heading--101') === null) {
-            document.querySelector('#lseNavTo--TOC-divider').style.display = 'block';
+          if (customersAlsoBought !== null && document.querySelector('.fseNavTo--Heading--101') === null) {
+            document.querySelector('#fseNavTo--TOC-divider').style.display = 'block';
             addHeadingToTOC(toc, customersAlsoBought, 101, 'Customers also bought...');
           }
         }
@@ -135,7 +135,7 @@
   const sidebar = document.querySelector('div[class^="index--desktopSidebarContainer"]');
   if (sidebar !== null) {
     const to = document.createElement('div');
-    to.id = 'lseSocialBar';
+    to.id = 'fseSocialBar';
 
     addPageNav(to);
     addSocialIcons(to);
@@ -146,33 +146,33 @@
   // Add page navigation TOC to sidebar
   function addPageNav(to) {
     const nav = document.createElement('div');
-    nav.id = 'lseNavTo';
+    nav.id = 'fseNavTo';
     nav.style.position = 'relative';
     nav.style.minWidth = '118px';
 
     nav.addEventListener('mouseenter', function(e) {
-      const toc = document.querySelector('#lseNavTo--TOC');
+      const toc = document.querySelector('#fseNavTo--TOC');
       toc.style.display = 'flex';
 
       // try to popup above the button
-      toc.classList.remove('lseNavTo--TOC-Dropdown');
+      toc.classList.remove('fseNavTo--TOC-Dropdown');
 
       // if it's out of bounds, display below the button
       const box = toc.getBoundingClientRect();
       if (box.top < 0) {
-        toc.classList.add('lseNavTo--TOC-Dropdown');
+        toc.classList.add('fseNavTo--TOC-Dropdown');
       }
     });
 
     nav.addEventListener('mouseleave', function(e) {
-      document.querySelector('#lseNavTo--TOC').style.display = 'none';
+      document.querySelector('#fseNavTo--TOC').style.display = 'none';
     });
 
     const dropdown = document.createElement('div');
-    dropdown.id = 'lseDropdown';
+    dropdown.id = 'fseDropdown';
 
     const dropdownButton = document.createElement('button');
-    dropdownButton.id = 'lseDropdown-button';
+    dropdownButton.id = 'fseDropdown-button';
 
     dropdownButton.appendChild(document.createTextNode('Navigate to'));
     dropdown.appendChild(dropdownButton);
@@ -180,10 +180,10 @@
     nav.appendChild(dropdown);
 
     const toc = document.createElement('div');
-    toc.id = 'lseNavTo--TOC';
+    toc.id = 'fseNavTo--TOC';
 
     toc.addEventListener('mouseleave', function(e) {
-      document.querySelector('#lseNavTo--TOC').style.display = 'none';
+      document.querySelector('#fseNavTo--TOC').style.display = 'none';
     });
 
     // Add entries to TOC
@@ -221,12 +221,12 @@
       encodeURIComponent(url);
 
     const social = document.createElement('div');
-    social.id = 'lseShareTo';
+    social.id = 'fseShareTo';
 
     // Label
     const p = document.createElement('p');
     const aText = document.createTextNode('Share to:');
-    p.id = 'lseShareTo--Label';
+    p.id = 'fseShareTo--Label';
     p.appendChild(aText);
     social.appendChild(p);
 
@@ -296,12 +296,12 @@
 
   // Utility to add headings to the page navigation TOC
   function addHeadingToTOC(toc, h, uid, altTitle) {
-    const headingID = 'lseNavTo--Heading--' + uid;
+    const headingID = 'fseNavTo--Heading--' + uid;
     h.classList.add(headingID);
 
     const heading = document.createElement('button');
     heading.appendChild(document.createTextNode(altTitle || h.innerText));
-    heading.className = 'lseNavTo--Heading';
+    heading.className = 'fseNavTo--Heading';
     heading.setAttribute('data-heading-id', headingID);
     heading.addEventListener('click', function(e) {
       document.querySelector('.' + e.target.getAttribute('data-heading-id')).scrollIntoView({ behavior: 'smooth' });
@@ -312,24 +312,24 @@
 
   ///////////////   CSS
   const css = [
-    '#lseSocialBar {',
+    '#fseSocialBar {',
     '  display: flex;',
     '  flex-direction: row;',
     '  justify-content: space-between;',
     '  align-items: baseline;',
     '  padding: 8px 8px 8px 0;',
     '}',
-    '#lseShareTo {',
+    '#fseShareTo {',
     '  display: flex;',
     '}',
-    '#lseShareTo--Label {',
+    '#fseShareTo--Label {',
     '  margin-left: 16px;',
     '  font-size: 16px;',
     '  vertical-align: middle;',
     '  display: inline-block;',
     '  user-select: none;',
     '}',
-    '#lseDropdown-button {',
+    '#fseDropdown-button {',
     '  background-color: #fff;',
     '  border: 1px solid #bbb;',
     '  border-radius: 4px;',
@@ -338,7 +338,7 @@
     '  background-position: right 16px center;',
     '  background-repeat: no-repeat;',
     '}',
-    '#lseNavTo--TOC {',
+    '#fseNavTo--TOC {',
     '  position: absolute;',
     '  top: 0;',
     '  left: 0;',
@@ -350,17 +350,17 @@
     '  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.12), 0 0 4px 0 rgba(0, 0, 0, 0.12);',
     '  z-index: 999;',
     '}',
-    '.lseNavTo--TOC-Dropdown {',
+    '.fseNavTo--TOC-Dropdown {',
     '  top: 100% !important;',
     '  transform: translateY(0) !important;',
     '}',
-    '.lseNavTo--Heading {',
+    '.fseNavTo--Heading {',
     '  background-color: #fff;',
     '  text-align: left;',
     '  border: none;',
     '  padding: .5em 1em;',
     '}',
-    '.lseNavTo--Heading:hover {',
+    '.fseNavTo--Heading:hover {',
     '  background-color: #f4f4f4;',
     '}',
   ].join('\n');

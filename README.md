@@ -17,15 +17,15 @@ You can also find this script on [OpenUserJS](https://openuserjs.org/scripts/sim
 ### See Also
  - [A low contrast, modern theme for the Faithlife Community Forums](https://github.com/simsrw73/white-off)
 
-## Logos Store Enhancements
+## Faithlife Stores Enhanced
 
-[![Install with Tampermonkey](https://img.shields.io/badge/Install%20with-Tampermonkey-00485b.svg)](https://github.com/simsrw73/userscripts/raw/master/scripts/Logos_Store_Enhancements.user.js)
+[![Install with Tampermonkey](https://img.shields.io/badge/Install%20with-Tampermonkey-00485b.svg)](https://github.com/simsrw73/userscripts/raw/master/scripts/Faithlife_Stores_Enhanced.user.js)
 
 Enhancements for Faithlife stores: logos.com, verbum.com, ebooks.faithlife.com, ebooks.noet.com
 
-- Adds the resource ID and Version info (when avail) to PDPs and links it to open in app.logos.com. Hover tip shows milestone indexes.
-- Remove Live Chat window and add it to "Phone" menu as an alternative
-- Add page navigation to smooth scroll to headings on PDPs
-- Add Share-To social icons
+- Adds extended information about the resource beneath the resource image. This includes the Resource ID and the current version of the resource. Hovering over the button shows the Milestone Indexes available in the resource. Additionally, clicking on the info button will open the resouce in app.logos.com.
+- Adds page navigation to the sidebar. No extra click to access the navigation--just hover over the Navigate button to open a menu of section headers. Select a header to scroll smoothly to that section of the page.
+- Adds Share-To social icons for sharing the resource to Faithlife, Facebook, and Twitter. Where applicable it will share an image of the resource, the title, and allow for you to enter a message.
+- Removes Live Chat window. You can initiate chat from the Support menu.
 
-![Demo](screenshots/LogosStoreEnh.png)
+![Demo](screenshots/FaithlifeStoresEnh.png)

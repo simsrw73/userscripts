@@ -5,3 +5,4 @@
 - Enhance carousels
 - Refactor observer to allow registering handlers instead of monolithic
 - Default Share-to message on CP/PP could ask others to signup
+- If browsing verbum, open resource in app.verbum rather than app.logos.
