@@ -26,7 +26,6 @@
         // Hide chat button
         if (mutation.target.matches('#lhnChatButton')) {
           mutation.target.style.display = 'none';
-        }
 
           // Display ResourceID & link it to app.logos.com
         } else if (mutation.target.matches('div[class^="index--imageContainer"]')) {
