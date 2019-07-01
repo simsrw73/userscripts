@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Faithlife Stores Enhanced
 // @namespace    https://github.com/simsrw73/userscripts
-// @version      0.5.0
+// @version      0.5.1
 // @description  Get extended information about resources
 // @author       Randy W. Sims
 // @updateURL    https://github.com/simsrw73/userscripts/raw/master/scripts/Faithlife_Stores_Enhanced.meta.js
@@ -21,6 +21,7 @@
 
   var observatory = function(mutations, observer) {
     mutations.forEach(function(mutation) {
+
       if (mutation.type === 'childList') {
 
         // Hide chat button
@@ -121,6 +122,18 @@
             document.querySelector('#fseNavTo--TOC-divider').style.display = 'block';
             addHeadingToTOC(toc, customersAlsoBought, 101, 'Customers also bought...');
           }
+
+        // Handle Added/Removed nodes individually
+        } else {
+          mutation.addedNodes.forEach(function(node){
+            if (/\bfacet--facet/.test(node.className) && // facet--mutuallyExclusiveFacet
+                ! (/\bfacet--mutuallyExclusiveFacet/.test(node.className) ||
+                   /\bfseFacet--Container/.test(node.className) ))
+            {
+              redrawFacetCheckbox(node);
+            }
+
+          });
         }
       }
     });
@@ -309,7 +322,26 @@
     toc.appendChild(heading);
   }
 
-  ///////////////   CSS
+  // Reformat Facet Checkboxes
+  const facets = document.querySelectorAll('input[class^="facet--checkbox"]');
+  facets.forEach(function(facet){
+    redrawFacetCheckbox(facet.parentElement);
+    // facet.parentElement.classList.add('fseFacet--Container');
+    // const newChkBox = document.createElement('span');
+    // newChkBox.className = 'fseFacet--Checkbox';
+    // facet.parentElement.insertBefore(newChkBox, facet.nextElementSibling);
+  });
+
+  function redrawFacetCheckbox(node){
+    node.classList.add('fseFacet--Container');
+    const newChkBox = document.createElement('span');
+    newChkBox.className = 'fseFacet--Checkbox';
+    node.insertBefore(newChkBox, node.querySelector('input[class^="facet--checkbox"]').nextElementSibling);
+  }
+
+
+
+  ///////////////   CSS   ///////////////
   const css = [
     '#fseSocialBar {',
     '  display: flex;',
@@ -361,6 +393,56 @@
     '}',
     '.fseNavTo--Heading:hover {',
     '  background-color: #f4f4f4;',
+    '}',
+    'input[class^="facet--checkbox"] {',
+    '  position: absolute;',
+    '  opacity: 0;',
+    '  cursor: pointer;',
+    '  height: 0;',
+    '  width: 0;',
+    '}',
+    '.fseFacet--Checkbox {',
+    '  position: absolute;',
+    '  top: 0;',
+    '  left: 0;',
+    '  height: 18px;',
+    '  width: 18px;',
+    '  border: 1px solid #aaa;',
+    '}',
+    '.fseFacet--Container {',
+    '  display: block;',
+    '  position: relative;',
+    '  padding-left: 24px;',
+    '  cursor: pointer;',
+    '  -webkit-user-select: none;',
+    '  -moz-user-select: none;',
+    '  -ms-user-select: none;',
+    '  user-select: none;',
+    '}',
+    '.fseFacet--Container:hover input ~ .fseFacet--Checkbox {',
+    '  background-color: #eee;',
+    '}',
+    '.fseFacet--Container input:checked ~ .fseFacet--Checkbox {',
+    '',
+    '}',
+    '.fseFacet--Checkbox:after {',
+    '  content: "";',
+    '  position: absolute;',
+    '  display: none;',
+    '}',
+    '.fseFacet--Container input:checked ~ .fseFacet--Checkbox:after {',
+    '  display: block;',
+    '  content: "\\2714"',
+    '}',
+    '.fseFacet--Container .fseFacet--Checkbox:after {',
+    '  left: 0;',
+    '  top: 0;',
+    '  width: 16px;',
+    '  height: 16px;',
+    '  color: var(--brand-blue);',
+    '  font-weight: 700;',
+    '  text-align: center;',
+    '  vertical-align: middle',
     '}',
   ].join('\n');
 

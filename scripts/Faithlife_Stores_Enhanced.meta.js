@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Faithlife Stores Enhanced
 // @namespace    https://github.com/simsrw73/userscripts
-// @version      0.5.0
+// @version      0.5.1
 // @description  Get extended information about resources
 // @author       Randy W. Sims
 // @updateURL    https://github.com/simsrw73/userscripts/raw/master/scripts/Faithlife_Stores_Enhanced.meta.js
