@@ -1,7 +1,5 @@
 # userscripts
 
-## Instructions
-
 Below are extesions for your browser to enhance your browsing experience on various websites.
 
 To use these extensions:
@@ -40,5 +38,8 @@ Enhancements for Faithlife stores: logos.com, verbum.com, ebooks.faithlife.com, 
 - Reformatted checkboxes
 
 ![Hero](screenshots/FaithlifeStoresEnh.png)
+
+
+Reformatted checkboxes
 
 ![Reformatted Checkboxes](screenshots/fseCheckboxes.png)
